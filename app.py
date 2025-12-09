@@ -84,17 +84,21 @@ def get_products():
     search = request.args.get('search', '')
     category = request.args.get('category', '')
     
-    query = 'SELECT * FROM products WHERE 1=1'
+    query = 'SELECT * FROM products'
     params = []
+    conditions = []
     
     if search:
-        query += ' AND (name LIKE ? OR description LIKE ? OR sku LIKE ?)'
+        conditions.append('(name LIKE ? OR description LIKE ? OR sku LIKE ?)')
         search_param = f'%{search}%'
         params.extend([search_param, search_param, search_param])
     
     if category:
-        query += ' AND category = ?'
+        conditions.append('category = ?')
         params.append(category)
+    
+    if conditions:
+        query += ' WHERE ' + ' AND '.join(conditions)
     
     query += ' ORDER BY name'
     
@@ -215,4 +219,8 @@ def get_categories():
     return jsonify(categories)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    import os
+    debug_mode = os.environ.get('FLASK_DEBUG', 'True').lower() == 'true'
+    host = os.environ.get('FLASK_HOST', '0.0.0.0')
+    port = int(os.environ.get('FLASK_PORT', '5000'))
+    app.run(debug=debug_mode, host=host, port=port)

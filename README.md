@@ -18,9 +18,8 @@ A modern web application for managing GPS device and software license inventory 
 
 - **Backend**: Python Flask
 - **Database**: SQLite
-- **Frontend**: HTML5, CSS3, JavaScript
-- **UI Framework**: Bootstrap 5
-- **Icons**: Font Awesome
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla - no frameworks)
+- **UI**: Custom CSS with modern gradient styling
 
 ## Installation
 
